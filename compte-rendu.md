@@ -44,9 +44,12 @@ Après détachement, `GetObject` a été refusé une fois la propagation IAM sta
 La bucket policy nomme `tp-iamuser` comme Principal et autorise la liste et la
 lecture. Les deux ont réussi et le dépôt est resté refusé. Une policy inline
 `TPDenyRead` a ensuite refusé `GetObject` malgré l'Allow de la bucket policy.
-Le test combiné a aussi refusé `ListObjects`, résultat non attendu et à
-reproduire après stabilisation. Les policies temporaires ont été retirées avant
-la phase AssumeRole ; aucune bucket policy ne doit rester.
+Lors du test initial, `ListObjects` avait aussi été refusé. La relecture des
+fichiers confirme toutefois que la bucket policy autorise `s3:ListBucket` et
+que le Deny ne vise que `s3:GetObject`. Un retest distinct après attente de
+propagation a obtenu `ListObjects = ALLOW` et `GetObject = DENY`. La cause
+exacte du résultat initial demeure inconnue faute de trace détaillée. Les
+policies temporaires ont ensuite été retirées.
 
 ## AssumeRole / STS
 
@@ -65,6 +68,11 @@ refusé. La session `tp-role` a réussi la liste et la lecture ; `PutObject` a
 Voir [docs/tests.md](docs/tests.md). Les résultats marqués partiels ne sont pas
 présentés comme des démonstrations complètes.
 
+Les règles de l'expérience AWS Free listent S3 parmi les services accessibles
+(hors S3 Access Grants) ; aucune restriction Free plan expliquant ces deux
+résultats divergents n'a été identifiée. Voir les références AWS dans
+`docs/tests.md`.
+
 ## Questions
 
 Voir [docs/questions.md](docs/questions.md), comprenant les mini-exercices, les
@@ -79,6 +87,7 @@ inline et l'Access Key du laboratoire restent à nettoyer après validation.
 ## Conclusion
 
 Les tests ont démontré l'accès minimal par policy d'identité et par rôle, et
-l'interdiction d'écriture. Le refus explicite de lecture a été observé, mais la
-combinaison complète Deny/Allow nécessite encore une répétition fiable de
-`ListObjects = ALLOW` avec `GetObject = DENY`.
+l'interdiction d'écriture. Le retest a validé `ListObjects = ALLOW` avec
+`GetObject = DENY`. L'anomalie de la première exécution reste sans cause
+historique vérifiable ; son statut est donc PARTIAL pour l'analyse de cause,
+malgré le retest fonctionnel concluant.
