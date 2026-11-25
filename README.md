@@ -20,6 +20,13 @@ source scripts/use-lab-env.sh
 ./scripts/check-env.sh
 ```
 
-La suite du laboratoire nécessite AWS CLI v2 récente et une intervention
-humaine pour la création du compte/projet, la connexion MFA et l'Access Key.
+Le laboratoire a été réalisé avec AWS CLI v2, après création humaine du compte,
+activation MFA et création manuelle de l'unique Access Key technique.
+
+## État final
+
+Les tests IAM/S3/STS ont été réalisés et les ressources AWS du laboratoire ont
+été supprimées. La cause du premier refus inattendu de `ListObjects` n'a pas pu
+être établie ; un retest ultérieur du scénario Deny explicite a donné le résultat
+attendu. Voir `compte-rendu.md` et `docs/cleanup.md`.
 

@@ -80,14 +80,20 @@ dix questions et une policy de lecture mono-objet non appliquée.
 
 ## Nettoyage
 
-**PENDING — confirmation requise.** Aucune suppression de ressource AWS n'a été
-effectuée. Le bucket, l'utilisateur, la policy gérée, le rôle, les policies
-inline et l'Access Key du laboratoire restent à nettoyer après validation.
+Nettoyage effectué après inventaire et validation des noms exacts du laboratoire.
+La clé unique a été désactivée puis supprimée ; le rôle et sa policy, les
+policies inline, l'utilisateur, la policy gérée et le bucket ont été supprimés.
+Le bucket contenait une version de `document.txt`, également supprimée avant
+suppression du bucket. L'absence des ressources IAM et S3 a été vérifiée par
+listes et lectures de contrôle. Voir `docs/cleanup.md`.
+
+La session temporaire `tp-admin` a été fermée avec `aws logout --profile
+tp-admin`. Seul le `.secrets/` local du projet a été supprimé ; `~/.aws` n'a pas
+été touché.
 
 ## Conclusion
 
 Les tests ont démontré l'accès minimal par policy d'identité et par rôle, et
 l'interdiction d'écriture. Le retest a validé `ListObjects = ALLOW` avec
 `GetObject = DENY`. L'anomalie de la première exécution reste sans cause
-historique vérifiable ; son statut est donc PARTIAL pour l'analyse de cause,
-malgré le retest fonctionnel concluant.
+historique vérifiable. Les ressources ont été nettoyées après les tests.

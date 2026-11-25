@@ -13,6 +13,17 @@ bucket policy + Deny a été rejoué séparément après 30 secondes de propagat
 | tp-user avec seulement TPAssumeReadRole | DENY direct | DENY direct | Non exécuté | Partiel |
 | Session tp-role | ALLOW | ALLOW | DENY | PASS |
 
+## Résultat final et nettoyage
+
+Tous les scénarios principaux ont été exécutés avant nettoyage. Le retest du
+Deny explicite a obtenu `ListObjects = ALLOW` et `GetObject = DENY`. Le premier
+résultat historique erroné pour `ListObjects` reste documenté comme inexpliqué ;
+les preuves détaillées de cette première exécution n'existaient pas.
+
+Les ressources AWS du TP ont ensuite été supprimées et leur absence vérifiée.
+Après nettoyage, les tests ne sont plus réexécutables sans recréer les
+ressources. Voir [cleanup.md](cleanup.md).
+
 Le test d'écriture utilise `interdit.txt` ou une clé de test propre au rôle.
 Les appels `GetObject` qui réussissent ont écrit dans `downloads/` ; aucun
 fichier local antérieur n'a servi de preuve.
