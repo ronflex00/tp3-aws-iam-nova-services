@@ -1,0 +1,12 @@
+.secrets/
+downloads/
+captures/private/
+*.csv
+.DS_Store
+__pycache__/
+.env
+.env.*
+aws_credentials*
+credentials
+config.local
+

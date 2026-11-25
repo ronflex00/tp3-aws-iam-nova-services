@@ -1,0 +1,19 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowLabUserList",
+      "Effect": "Allow",
+      "Principal": {"AWS": "arn:aws:iam::944516640271:user/tp-iamuser"},
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::nova-iam-944516640271-467ec3"
+    },
+    {
+      "Sid": "AllowLabUserRead",
+      "Effect": "Allow",
+      "Principal": {"AWS": "arn:aws:iam::944516640271:user/tp-iamuser"},
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::nova-iam-944516640271-467ec3/*"
+    }
+  ]
+}
